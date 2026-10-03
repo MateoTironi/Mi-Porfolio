@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mateo Tironi · Ciberseguridad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* 1. TOKENS: todos los colores viven acá. Cambiá estos valores y cambia toda la página. */
+:root{
+  --bg:#0f1722; --panel:#172234; --line:#263550;
+  --text:#dce4ef; --muted:#93a4bc; --accent:#f5b544; --accent-ink:#1a1204;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --max:62rem;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){--bg:#f3f5f8;--panel:#fff;--line:#d5dce7;--text:#14202f;--muted:#53647c;--accent:#a35f00;--accent-ink:#fff}
+}
+:root[data-theme="light"]{--bg:#f3f5f8;--panel:#fff;--line:#d5dce7;--text:#14202f;--muted:#53647c;--accent:#a35f00;--accent-ink:#fff}
+:root[data-theme="dark"]{--bg:#0f1722;--panel:#172234;--line:#263550;--text:#dce4ef;--muted:#93a4bc;--accent:#f5b544;--accent-ink:#1a1204}
+
+/* 2. BASE */
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 4rem);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:400 1.0625rem/1.65 var(--sans)}
+a{color:var(--accent);text-underline-offset:.2em}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+h1,h2,h3{line-height:1.15;margin:0;font-weight:600;letter-spacing:-.01em}
+p{margin:0 0 1rem;max-width:62ch}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 1.25rem}
+section{padding:4rem 0}
+h2{font-size:1.75rem;margin-bottom:1.75rem}
+
+/* 3. HEADER */
+header{position:sticky;top:env(safe-area-inset-top,0px);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:5}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:3.5rem}
+.logo{font:500 .95rem var(--mono);color:var(--text);text-decoration:none}
+nav{display:flex;gap:1.25rem;align-items:center;font-size:.95rem}
+nav a{color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--text)}
+#theme{background:none;border:1px solid var(--line);color:var(--text);border-radius:6px;padding:.3rem .6rem;font:inherit;font-size:.85rem;cursor:pointer}
+@media(max-width:560px){nav a{display:none}}
+
+/* 4. HERO: título + "escaneo" del perfil */
+.hero{padding:4.5rem 0 3rem}
+.hero .wrap{display:grid;gap:2.5rem;grid-template-columns:1.05fr 1fr;align-items:center}
+@media(max-width:820px){.hero .wrap{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(2.4rem,6vw,3.75rem);margin-bottom:1rem}
+.lead{font-size:1.2rem;color:var(--muted)}
+.btns{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem}
+.btn{display:inline-block;padding:.65rem 1.1rem;border-radius:6px;border:1px solid var(--line);color:var(--text);text-decoration:none;font-weight:500}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.term{background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden;font:400 .875rem/1.7 var(--mono)}
+.term-bar{padding:.5rem .9rem;border-bottom:1px solid var(--line);color:var(--muted);font-size:.8rem}
+.term-body{padding:1rem .9rem;overflow-x:auto;white-space:pre}
+.term .p{color:var(--accent)} .term .m{color:var(--muted)}
+.term-body span.l{display:block;opacity:0;animation:show .01s forwards}
+.term-body span.l:nth-child(1){animation-delay:.2s}.term-body span.l:nth-child(2){animation-delay:.6s}
+.term-body span.l:nth-child(3){animation-delay:.9s}.term-body span.l:nth-child(4){animation-delay:1.1s}
+.term-body span.l:nth-child(5){animation-delay:1.3s}.term-body span.l:nth-child(6){animation-delay:1.5s}
+@keyframes show{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.term-body span.l{animation:none;opacity:1}html{scroll-behavior:auto}}
+
+/* 5. SKILLS */
+.groups{display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))}
+.group{border-top:2px solid var(--accent);padding-top:.9rem}
+.group h3{font-size:1.1rem;margin-bottom:.35rem}
+.group p{color:var(--muted);font-size:.95rem;margin-bottom:.75rem}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;padding:0;margin:0;list-style:none}
+.tags li{border:1px solid var(--line);border-radius:4px;padding:.15rem .55rem;font:400 .82rem var(--mono)}
+
+/* 6. PROYECTOS */
+.projects{display:grid;gap:1.25rem}
+.proj{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:1.5rem}
+.proj.main{border-color:var(--accent)}
+.proj h3{font-size:1.25rem;margin-bottom:.25rem}
+.meta{color:var(--muted);font-size:.9rem;margin-bottom:.9rem}
+.links{display:flex;gap:1.25rem;margin-top:.9rem;font-weight:500}
+
+/* 7. FORMACIÓN */
+.timeline{list-style:none;margin:0;padding:0 0 0 1.25rem;border-left:2px solid var(--line)}
+.timeline li{position:relative;padding-bottom:1.5rem}
+.timeline li::before{content:"";position:absolute;left:calc(-1.25rem - 6px);top:.55rem;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.timeline strong{display:block}
+.timeline span{color:var(--muted);font-size:.92rem}
+
+/* 8. CONTACTO + FOOTER */
+.contact{border-top:1px solid var(--line)}
+.contact a.big{font-size:1.5rem;font-weight:600;word-break:break-all}
+footer{border-top:1px solid var(--line);padding:1.5rem 0;color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top">mateo@tironi:~$</a>
+    <nav>
+      <a href="#skills">Skills</a><a href="#proyectos">Proyectos</a><a href="#formacion">Formación</a><a href="#contacto">Contacto</a>
+      <button id="theme" type="button" aria-label="Cambiar entre tema claro y oscuro">Tema</button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Mateo Tironi</h1>
+        <p class="lead">Estudiante de Ciberseguridad con base en desarrollo Full Stack. Me enfoco en Linux, seguridad web, redes y pentesting, y entiendo cómo se construyen las aplicaciones que después hay que proteger.</p>
+        <div class="btns">
+          <a class="btn primary" href="#proyectos">Ver proyectos</a>
+          <a class="btn" href="https://github.com/MateoTironi">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/mateo-tironi-a42366248/">LinkedIn</a>
+        </div>
+      </div>
+      <div class="term" aria-label="Resumen del perfil en formato de terminal">
+        <div class="term-bar">perfil.sh · Rosario, Argentina</div>
+        <div class="term-body"><span class="l"><span class="p">$</span> scan --perfil mateo-tironi</span><span class="l"><span class="m">ÁREA          ESTADO       DETALLE</span></span><span class="l">linux         activo       uso diario y terminal</span><span class="l">seguridad web estudiando   OWASP Top 10, enumeración</span><span class="l">redes         practicando  Cisco Packet Tracer</span><span class="l">desarrollo    sólido       JS, React, Node, Python</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <h2>Skills</h2>
+      <div class="groups">
+        <div class="group">
+          <h3>Seguridad</h3>
+          <p>Formación introductoria en pentesting y seguridad de aplicaciones web.</p>
+          <ul class="tags"><li>OWASP Top 10</li><li>Web Security</li><li>Pentesting (básico)</li><li>ISO 27001</li><li>Gestión de riesgos</li></ul>
+        </div>
+        <div class="group">
+          <h3>Sistemas y redes</h3>
+          <p>Direccionamiento IP, segmentación y servicios de red en entornos simulados.</p>
+          <ul class="tags"><li>Linux</li><li>Networking</li><li>Packet Tracer</li><li>Git</li></ul>
+        </div>
+        <div class="group">
+          <h3>Desarrollo</h3>
+          <p>Aplicaciones Full Stack con tecnologías modernas de front-end y back-end.</p>
+          <ul class="tags"><li>Python</li><li>JavaScript</li><li>TypeScript</li><li>React</li><li>Node.js</li><li>Express</li><li>PostgreSQL</li><li>MongoDB</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="proyectos">
+    <div class="wrap">
+      <h2>Proyectos</h2>
+      <div class="projects">
+        <article class="proj main">
+          <h3>Simulación de red en Cisco Packet Tracer</h3>
+          <div class="meta">Proyecto académico · Seguridad informática</div>
+          <p>Diseñé y configuré una red simulada aplicando direccionamiento IP, conectividad entre dispositivos, segmentación de red y configuración básica de servicios. Lo relacioné con conceptos de ISO 27001 y gestión de riesgos.</p>
+          <ul class="tags"><li>Packet Tracer</li><li>Segmentación</li><li>Direccionamiento IP</li><li>ISO 27001</li></ul>
+        </article>
+        <article class="proj">
+          <h3>Despegue · agencia de viajes</h3>
+          <div class="meta">Proyecto grupal de 7 personas · Scrum · 3 semanas</div>
+          <p>Aplicación web de gestión de vuelos y reservas. Desarrollé el filtrado y ordenamiento de vuelos, el cambio de contraseña, las rutas protegidas, las búsquedas recientes y el panel de administración con CRUD de ofertas, gestión de usuarios e ingresos totales.</p>
+          <ul class="tags"><li>React</li><li>Redux</li><li>Node.js</li><li>MongoDB</li><li>Auth0</li><li>Bcryptjs</li></ul>
+          <div class="links"><a href="https://despegue.vercel.app/">Ver sitio</a><a href="https://github.com/laubento/Despegue">Código</a></div>
+        </article>
+        <article class="proj">
+          <h3>PokemonWeb</h3>
+          <div class="meta">Proyecto individual · 3 semanas</div>
+          <p>Aplicación para buscar Pokémon por nombre, filtrarlos por tipo y origen, ordenarlos por ataque o alfabéticamente, y crear los propios.</p>
+          <ul class="tags"><li>React</li><li>Redux</li><li>Express</li><li>Sequelize</li><li>PostgreSQL</li></ul>
+          <div class="links"><a href="https://github.com/MateoTironi/PI_MateoTironi">Código</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="formacion">
+    <div class="wrap">
+      <h2>Formación y certificaciones</h2>
+      <ul class="timeline">
+        <li><strong>Cybersecurity Foundation Bootcamp</strong><span>BASE4 Security · agosto 2026</span></li>
+        <li><strong>Pre-Security</strong><span>TryHackMe · agosto 2026</span></li>
+        <li><strong>Licenciatura en Seguridad Informática</strong><span>Universidad Siglo 21 · 2023 – 2028 (en curso)</span></li>
+        <li><strong>Introducción a Linux</strong><span>Hack4u · agosto 2024</span></li>
+        <li><strong>TypeScript</strong><span>Udemy · mayo 2023</span></li>
+        <li><strong>Fullstack Developer, más de 720 horas</strong><span>Henry · julio – noviembre 2022</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contacto" class="contact">
+    <div class="wrap">
+      <h2>Contacto</h2>
+      <p>Estoy buscando oportunidades para seguir aprendiendo y aportar en equipos de seguridad.</p>
+      <p><a class="big" href="mailto:tironimateo02@gmail.com">tironimateo02@gmail.com</a></p>
+      <div class="btns">
+        <a class="btn" href="https://github.com/MateoTironi">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/mateo-tironi-a42366248/">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">Mateo Tironi · Rosario, Santa Fe, Argentina</div></footer>
+
+<script>
+(function(){
+  var root=document.documentElement,btn=document.getElementById('theme');
+  try{var saved=localStorage.getItem('theme');if(saved)root.setAttribute('data-theme',saved)}catch(e){}
+  btn.addEventListener('click',function(){
+    var dark=root.getAttribute('data-theme')==='dark'||(!root.getAttribute('data-theme')&&!matchMedia('(prefers-color-scheme: light)').matches);
+    var next=dark?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('theme',next)}catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
